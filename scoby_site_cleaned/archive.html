@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCOBY Archive — Archive</title>
+    <link rel="preload" href="fonts/NeurealTrial-Regular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="fonts/NeurealTrial-Mono.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="fonts/AlteHaasGroteskRegular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="fonts/AlteHaasGroteskBold.woff" as="font" type="font/woff" crossorigin>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-archive">
+<header class="site-header">
+  <nav class="nav-split">
+    <a class="nav-pair" href="index.html">
+      <span class="big">polyculture</span>
+      <span class="label">ARCHIVE</span>
+    </a>
+    <a class="nav-pair" href="archive.html">
+      <span class="big">material</span>
+      <span class="label">SAMPLES</span>
+    </a>
+  </nav>
+</header>
+
+  <section class="filters">
+    <button class="filter-btn active" data-tag="all">All</button>
+    <button class="filter-btn" data-tag="Composite">Composite</button>
+    <button class="filter-btn" data-tag="SCOBY Sheet">SCOBY Sheet</button>
+  </section>
+
+  <section class="layout">
+    <section id="sample-gallery" class="gallery"></section>
+
+    <section id="sample-details" class="card">
+      <div class="card-header">
+        <button id="close-card" class="close-btn" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="card-content">
+        <!-- LEFT: IMAGES -->
+        <div class="card-left images">
+          <img id="micro-image" class="sample-img hidden" alt="Microscope image" />
+          <img id="lightbox-image" class="sample-img hidden" alt="Lightbox image" />
+          <img id="scan-image" class="sample-img hidden" alt="Scan image" />
+        </div>
+
+        <!-- RIGHT: TEXT INFO -->
+        <div class="card-right">
+          <h2 id="sample-title"></h2>
+          <div id="sample-tags" class="tags"></div>
+          <hr class="divider" />
+          <pre id="sample-recipe" class="recipe"></pre>
+          <hr class="divider" />
+          <div id="sample-description" class="description"></div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script src="script.js" defer></script>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Left column: logo -->
+    <div class="footer-col footer-col-logo">
+      <img src="img/logo2.svg" alt="Polyculture Logo" class="footer-logo" />
+    </div>
+
+    <!-- Right column: text + button -->
+    <div class="footer-col footer-col-text">
+      <h2 class="footer-heading">A growing archive for biodesign</h2>
+      <p class="footer-subheading">
+        Polyculture Archive is a project that came about from the course
+        Biodesign with SCOBY at the Fashion and Technology department of
+        Kunstuniversität Linz.
+      </p>
+      <a href="#" class="footer-button">Submit a sample</a>
+    </div>
+  </div>
+  
+<div class="footer-bottom">
+  <span class="footer-meta">2025 © Polyculture Archive</span>
+  <span class="footer-credit">Design and Development by Julia Schäffler</span>
+  <img src="img/kunstuni.png" alt="Kunstuni Logo" class="footer-bottom-logo" />
+</div>
+
+</footer>
+</body>
+
+
+
+
+</html>

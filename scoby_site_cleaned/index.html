@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCOBY Archive — Home</title>
+  <link rel="preload" href="fonts/NeurealTrial-Regular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="fonts/NeurealTrial-Mono.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="fonts/AlteHaasGroteskRegular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="fonts/AlteHaasGroteskBold.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-home">
+  <!-- Navigation bar -->
+  <header class="site-header">
+  <nav class="nav-split">
+    <a class="nav-pair" href="index.html">
+      <span class="big">polyculture</span>
+      <span class="label">ARCHIVE</span>
+    </a>
+    <a class="nav-pair" href="archive.html">
+      <span class="big">material</span>
+      <span class="label">SAMPLES</span>
+    </a>
+  </nav>
+</header>
+
+
+  <!-- Hero section -->
+ <!-- Full-screen hero (SVG image fills the rest of the viewport under the sticky nav) -->
+<section class="hero-full" aria-label="Hero artwork">
+  <!-- Put your SVG at img/hero.svg (you can swap to a different path/name) -->
+  <img src="img/hero.svg" alt="SCOBY hero artwork" class="hero-img" />
+</section>
+
+<!-- Measure the sticky nav and set --nav-h so the hero exactly fills the remainder -->
+<script>
+  (function () {
+    const header = document.querySelector('.site-header');
+    const setNavH = () =>
+      document.documentElement.style.setProperty('--nav-h', (header?.offsetHeight || 0) + 'px');
+    window.addEventListener('load', setNavH, { once: true });
+    window.addEventListener('resize', setNavH);
+    if (window.ResizeObserver && header) new ResizeObserver(setNavH).observe(header);
+  })();
+</script>
+
+
+  <!-- Body section --><!-- Body section (white background), sits ABOVE hero as you scroll -->
+<section class="home-body" aria-labelledby="home-body-lede">
+  <div class="home-body-inner">
+    <!-- Heading paragraph (~48px) with 16.6666% left indent -->
+    <p id="home-body-lede" class="home-lede">
+      A digital repository for material studies with SCOBY and other biomaterials, preserving a continuous record of experimental practices in bio-based design.
+    </p>
+
+    <!-- Body copy (~20px) -->
+    <p class="home-copy">
+      This collection brings together experimental projects in which students investigated the potential of bacterial cellulose as both a material for design and a subject of research. 
+      It serves as a record of creative inquiry, technical discovery, and collaborative learning within the broader field of bio-based design. Under the guidance of Riina Õun and 
+      Peter Holtzinger, students were introduced to the fundamentals of cultivating SCOBY (Symbiotic Culture of Bacteria and Yeast) and encouraged to develop hands-on methods for material growth.
+    </p>
+
+  <p id="home-body-lede" class="home-lede">
+SCOBY, a living symbiotic culture, produces bacterial cellulose as a by-product of fermentation. This cellulose, when harvested and dried, becomes a novel material for experimentation and design.
+    </p>
+
+     <!-- Body copy (~20px) -->
+    <p class="home-copy">
+      The work represented here spans a diverse range of approaches. Students experimented with techniques for cultivating, processing, and manipulating bacterial cellulose, testing its behavior under different conditions and pushing its potential as a material for textiles, accessories, and conceptual design applications. Each experiment reflects both scientific observation and artistic intuition, showing how design education can bridge disciplines in unexpected and meaningful ways.
+ </p>
+
+ <p class="home-copy">
+      Central to this archive is the documentation of process, material outcomes, and photographic records. Each entry captures the iterative nature of working with SCOBY: the growth cycles, material transformations, and the ways in which environmental variables shape the final result. By making these processes visible, the archive not only highlights individual outcomes but also emphasizes experimentation as an ongoing and open-ended practice.
+ </p>
+    </div>
+</section>
+
+
+  <!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Left column: logo -->
+    <div class="footer-col footer-col-logo">
+      <img src="img/logo2.svg" alt="Polyculture Logo" class="footer-logo" />
+    </div>
+
+    <!-- Right column: text + button -->
+    <div class="footer-col footer-col-text">
+      <h2 class="footer-heading">A growing archive for biodesign</h2>
+      <p class="footer-subheading">
+        Polyculture Archive is a project that came about from the course
+        Biodesign with SCOBY at the Fashion and Technology department of
+        Kunstuniversität Linz.
+      </p>
+      <a href="#" class="footer-button">Submit a sample</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+  <span class="footer-meta">2025 © Polyculture Archive</span>
+  <span class="footer-credit">Design and Development by Julia Schäffler</span>
+  <img src="img/kunstuni.png" alt="Kunstuni Logo" class="footer-bottom-logo" />
+</div>
+
+</footer>
+</body>
+</html>

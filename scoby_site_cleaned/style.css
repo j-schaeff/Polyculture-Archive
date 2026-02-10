@@ -1,0 +1,596 @@
+
+/* ====== FONTS ====== */
+@font-face {
+  font-family: "Alte Haas Grotesk";
+  src: url("fonts/AlteHaasGroteskRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Alte Haas Grotesk";
+  src: url("fonts/AlteHaasGroteskBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neureal Trial";
+  src: url("fonts/NeurealTrial-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neureal Trial Mono";
+  src: url("fonts/NeurealTrial-Mono.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ====== VARIABLES ====== */
+:root {
+  /* Fonts */
+  --font-body: "Alte Haas Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-head: "Neureal Trial", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-head-mono: "Neureal Trial Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", monospace;
+
+  /* Theme */
+  --bg: #E6E8D9;
+  --ink: #000000;
+  --ink-muted: #333333;
+  --ink-invert: #fefbec;
+  --accent: #000000;
+  --panel: #ffffff;
+  --panel-border: #cccccc;
+  --intro-bg: #352802;
+
+  /* Layout */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 32px;
+  --gap-sm: 0.5rem;
+  --gap-md: 1rem;
+  --gap-lg: 2rem;
+
+  /* Sticky header height (set by script on home) */
+  --nav-h: 0px;
+
+  /* Home lede indent */
+  --lede-indent: 16.6666vw;
+
+  /* …existing vars… */
+  --nav-h: 0px;         /* set by script */
+  --nav-top: 0px;       /* set by script */
+  --nav-total: 0px;     /* set by script: offsetTop + offsetHeight */
+  --hero-gap: 2rem;     /* exact space between header bottom and hero */
+
+
+  --hero-gap: 2rem;     /* desired space below header */
+  --hero-extra-gap: 1rem; /* ADD this for extra breathing room */
+
+}
+
+@media (max-width: 768px) {
+  :root { --lede-indent: 8vw; }
+}
+
+/* ====== BASE ====== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; overflow-x: hidden; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+}
+
+.hidden { display: none !important; }
+
+h1, h2, h3 { font-family: var(--font-head); font-weight: 400; }
+
+/* ====== STICKY SPLIT NAV ====== */
+.site-header {
+  position: sticky;
+  top: 10px;
+  z-index: 1000;
+  background: transparent;
+  margin: 0;
+  padding: .5rem 1rem;
+}
+
+.nav-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Each link = big word + small label on the RIGHT */
+.nav-pair {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--ink);
+  line-height: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  font-size: clamp(10px, 3.8vw, 40px);
+  max-width: 50vw;
+  overflow: hidden;
+}
+.nav-pair .big {
+  font-family: var(--font-head);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.nav-pair .label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.4em;
+  line-height: 1;
+  text-transform: uppercase;
+  transform: translateY(-0.04em);
+}
+.nav-pair:hover { opacity: 0.3; }
+
+@media (max-width: 480px) {
+  .site-header { padding: .4rem .75rem; }
+  .nav-pair { font-size: clamp(18px, 6.5vw, 34px); gap: 0.35rem; }
+}
+
+/* ====== INTRO (shared) ====== */
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background-color: var(--intro-bg);
+  color: var(--ink-invert);
+  gap: var(--gap-lg);
+  margin: 1rem;
+  border-radius: var(--radius-md);
+}
+.intro-heading, .intro-description {
+  flex: 1 1 45%;
+  min-width: 280px;
+}
+.intro-heading h2 { margin: 0; }
+.intro-description p { margin: 0; line-height: 1.6; }
+
+/* ====== HOME PAGE ====== */
+/* Full-screen hero under sticky header */
+/* HOME: Fixed hero that never moves */
+/* Make the hero reserve exactly the visible viewport below the sticky nav */
+.page-home .hero-full {
+  min-height: calc(100vh - var(--nav-h) - var(--hero-gap));
+  margin: 0;
+  border: 0;
+  padding: 1rem;
+  position: relative;
+  z-index: -1;
+  overflow: visible;
+}
+
+/* Fixed hero layer that stops at the bottom of the viewport */
+.page-home .hero-full::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: calc(var(--nav-h) + var(--hero-gap));           /* uses --nav-h (set by your script) */
+  width: 100vw;
+  height: calc(100vh - var(--nav-h) - var(--hero-gap));/* capped to viewport */
+  background: url("img/hero.svg") center / cover no-repeat;
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: 0; /* keep it behind content/footer */
+}
+
+
+
+/* If the inline <img> is still present, hide it (we're using ::before now) */
+.hero-full .hero-img { display: none !important; }
+
+/* Body should scroll OVER the fixed hero */
+.page-home .home-body {
+  position: relative;
+  z-index: 3;         /* above the hero’s fixed layer */
+  background: #fff;
+  margin: -1rem 0 0 0; /* preserves your overlap */
+}
+
+.hero-full .hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+/* Home: Body section */
+.page-home .home-body {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  margin: -1rem 0 0 0;
+  padding: clamp(1rem, 2vw, 2rem) 1rem 2.5rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+
+.home-lede {
+  font-family: "Neureal Trial", "Neureal Trial Mono", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.15;
+  margin: 0 0 2rem 0;
+  padding-left: var(--lede-indent);
+}
+.home-copy {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.6vw, 20px);
+  line-height: 1.2;
+  margin: 2rem;
+  max-width: 1000lvh;
+  padding-left: calc(2 * var(--lede-indent));
+}
+
+@media (max-width: 768px) {
+  .page-home .home-body { margin-top: -0.75rem; padding: 1rem; }
+  .home-lede, .home-copy { padding-left: 8%; margin-left: 8%; }
+}
+
+/* ====== ARCHIVE PAGE ====== */
+.cover { margin: 0 1rem; }
+
+/* Filters */
+.filters { margin: 20px 1rem; }
+.filter-btn {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--accent);
+  background: none;
+  cursor: pointer;
+  color: var(--accent);
+  margin-right: 10px;
+}
+.filter-btn.active {
+  background-color: var(--accent);
+  color: var(--ink-invert);
+}
+
+/* Layout (Gallery + Card) */
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-md);
+  margin: 1rem auto;
+  width: 100%;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2rem;
+  flex: 1 1 100%;
+}
+.gallery img {
+  min-width: 80px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s ease;
+}
+.gallery img:hover { transform: scale(1.05); }
+
+/* Card (hidden by default) */
+.card {
+  flex: 1 1 66.66%;
+  display: none;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--panel-border);
+  background-color: var(--panel);
+}
+.card.active {
+  display: flex;
+  margin: 0 1rem;
+}
+.card-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+.close-btn {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #352802;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+}
+.card-content {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+}
+.card-left, .card-right { flex: 1 1 50%; }
+.card-right {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.card-right h2 { margin: 0; }
+
+.tags { margin: 10px 0; }
+.tags span {
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 8px;
+  margin-right: 6px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.divider {
+  border: none;
+  border-top: 1px solid var(--panel-border);
+  margin: 1rem 0;
+}
+.recipe { white-space: pre-wrap; font-size: 14px; }
+.images { display: flex; flex-direction: column; gap: 1rem; }
+.sample-img { width: 100%; border-radius: var(--radius-sm); }
+
+/* When card is open, tighten the gallery */
+.layout.card-open .gallery {
+  flex: 1 1 33%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Put the details card ABOVE the gallery on archive when open */
+.page-archive .layout.card-open .card {
+  order: -1;            /* move before the gallery */
+  flex: 1 1 100%;       /* take full row so it sits on its own line */
+  width: 100%;
+  margin: 0 1rem 1rem;  /* small space below the card */
+}
+.page-archive .layout.card-open .gallery {
+  order: 0;             /* gallery follows the card */
+  flex: 1 1 100%; 
+  grid-template-columns: repeat(6, 1fr);      /* keep the grid below, full width */
+  /* keep your existing “tightened” grid if you like: 
+     grid-template-columns: repeat(3, 1fr);
+     (You already set this earlier for .layout.card-open .gallery) */
+}
+
+/* === Archive: card opens to the RIGHT, spans 4/6; gallery wraps around === */
+.page-archive .layout.card-open {
+  /* switch the parent to a 6-col grid so the card can sit with thumbs */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2rem; /* matches your .gallery gap */
+  align-items: start;
+}
+
+/* Promote gallery children into the parent grid while card is open */
+.page-archive .layout.card-open .gallery {
+  display: contents;               /* thumbs become direct grid items */
+  grid-template-columns: none !important; /* override the "3 columns" rule */
+  flex: none;                      /* ignore flex sizing while we're in grid mode */
+}
+
+/* Place the card in the top-right, spanning 4 of the 6 columns */
+.page-archive .layout.card-open .card {
+  order: -1;                       /* place before thumbs for auto-placement */
+  grid-column: 3 / span 4;         /* columns 3-6 (right 4/6) */
+  grid-row: 1;                     /* top row */
+  align-self: start;
+  display: flex;                   /* keep your internal flex layout */
+  margin: 0;                       /* let the grid gap control spacing */
+  width: 100%;
+}
+
+/* Keep thumbnails behaving normally as grid items */
+.page-archive .layout.card-open .gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+
+
+/* Mobile: fall back to stacking */
+@media (max-width: 768px) {
+  .page-archive .layout.card-open {
+    display: block;                /* back to normal flow on small screens */
+  }
+  .page-archive .layout.card-open .gallery {
+    display: grid;                 /* restore its own grid */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  .page-archive .layout.card-open .card {
+    order: 0;
+    margin: 1rem 0;
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+
+
+
+/* ====== FOOTER ====== */
+/* ====== FOOTER (pulled-over panel) ====== */
+.site-footer {
+  position: relative;
+  z-index: 3;                              /* above hero/background */
+  background: var(--panel);                /* white panel, matches your body */
+  margin: -1rem 0 0 0;                     /* pull OVER the previous section */
+  padding: 2.5rem 1rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;  /* rounded top corners */
+  background: var(--bg);
+}
+
+/* Footer pulled-over panel (same behavior as home body panel) */
+.site-footer {
+  position: relative;
+  z-index: 3;                         /* above hero/background, like .home-body */
+  background: var(--panel);           /* white panel */
+  margin: -1rem 0 0 0;                /* pull OVER previous section */
+  padding: 2.5rem 1rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0; /* rounded top corners */
+  isolation: isolate;                 /* ensure it paints above fixed layers */
+  background: var(--bg);
+}
+
+
+/* keep your existing inner layout/styles below this line */
+
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* left: logo, right: text */
+  gap: 4rem;
+  align-items: start;
+  
+  margin: 0 auto;
+}
+
+.footer-col-logo {
+  display: flex;
+  align-items: flex-start;
+}
+.footer-logo {
+  width: 100%;
+  
+  height: auto;
+}
+
+.footer-col-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* ensure children hug left edge */
+  gap: 3rem;
+}
+
+.footer-heading {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 4vw, 3.5rem); /* large responsive size */
+  line-height: 1.2;
+  margin: 0;
+  max-width: 15ch;
+}
+
+.footer-subheading {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 70ch;
+}
+
+.footer-button {
+ display: inline-block;      /* hug its content */
+  align-self: flex-start;     /* don’t stretch with flex parent */
+  background: #fff;
+  color: #000;
+  padding: 0.5rem 2rem;       /* ~.5rem vertical, 1rem horizontal */
+  border: 0px solid #000;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.footer-button:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ====== FOOTER BOTTOM ROW ====== */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between; /* even spacing between items */
+  align-items: center;
+  width: 100%;
+  padding-top: 2rem;   /* less spacing above */
+  font-size: 0.75rem;  /* smaller text */
+  color: var(--ink-muted);
+}
+
+.footer-bottom-logo {
+  height: 20px;  /* smaller logo */
+  width: auto;
+}
+
+
+
+/* Stack neatly on small screens */
+@media (max-width: 600px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+
+
+/* Stack columns on small screens */
+@media (max-width: 560px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .footer-col-logo {
+    justify-content: flex-start;
+  }
+}
+
+
+
+
+/* ====== BREAKPOINTS ====== */
+@media (max-width: 1200px) {
+  .gallery { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 900px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+}
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .gallery { order: 2; }
+  .card { order: 1; }
+  .layout.card-open .gallery {
+    flex: 1 1 100%;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  .card-content { flex-direction: column; }
+  .card-left, .card-right { flex: 1 1 100%; }
+  .card-left { order: 2; }
+  .card-right { order: 1; }
+}
+
+
+
+
+
+
+
